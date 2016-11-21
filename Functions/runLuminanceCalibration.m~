@@ -1,0 +1,67 @@
+function [inVals, outVals] = runLuminanceCalibration(display, test, whichChannel)
+    
+    if nargin < 3
+        whichChannel = 4;                   % Run R+G+B
+    end
+    
+    if nargin < 2
+        test.stepsPerChannel = 64;         % Number of luminance steps per channel
+    end
+    
+    if (nargin < 1) || ~isfield(display,'gamma')
+        display.gamma = [1.0 1.0 1.0]; 
+        warningText = 'No display gamma given! Using [1, 1, 1].';
+        warning('runLuminanceCalibration:noDisplayGamma',warningText);
+    end
+    
+    if (nargin < 1) || ~isfield(display,'centre')
+        display.gamma = [1.0 1.0 1.0]; 
+        warningText = 'No display centre given! Using [640, 512].';
+        warning('runLuminanceCalibration:noDisplayCentre',warningText);
+    end
+    
+    if whichChannel == 4
+        channelMultiplier = ones(1,3);
+    else
+        channelMultiplier = zeros(1,3);
+        channelMultiplier(whichChannel) = 1;
+    end
+    
+    inVals = linspace(0,1,test.stepsPerChannel);
+    outVals = NaN(1,test.stepsPerChannel);
+    
+    mainRect = CenterRectOnPoint([0 0 400 400], display.centre(1), display.centre(2));
+    flankRects = [mainRect(1)-201 mainRect(2) mainRect(1)-1 mainRect(4);
+                  mainRect(3)+1 mainRect(2) mainRect(3)+201 mainRect(4)]';
+    
+    for thisStep = 1:test.stepsPerChannel
+       
+        Screen('FillRect', display.ptbWindow, inVals(thisStep).*channelMultiplier, mainRect);
+        Screen('FillRect', display.ptbWindow, (1-inVals(thisStep)).*channelMultiplier, flankRects);
+        Screen('Flip', display.ptbWindow);
+
+        PR670init;
+        PR
+        
+% PR670close                     - Closes the PR-670 connection.
+% PR670config                    - Update the PR-670 configuration.
+% PR670getserialnumber           - Gets the PR-670 serial number.
+% PR670getsyncfreq               - Measures the frequency of the light source.
+% PR670init                      - Initialize the serial port to talk to the PR-670.
+% PR670measspd                   - Make a measurement measurement.
+% PR670measxyz                   - Make an XYZ measurement with the PR-670.
+% PR670parsespdstr               - Parses the  spectral power distribution string returned by the PR-670.
+% PR670rawspd                    - Takes an spd measurement and returns the results.
+% PR670rawxyz                    - Makes a raw XYZ measurement using the PR-670.
+% PR670read                      - Read data from the PR-670.
+% PR670set                       - get - Set and get PR-670 attributes
+% PR670setsyncfreq               - Sets the sync frequency for the light source.
+% PR670write                     - Write a string of characters to the PR-670.
+        
+        
+        
+        KbWait;
+        
+    end
+    
+end
