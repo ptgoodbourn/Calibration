@@ -21,10 +21,10 @@ function makeReferenceMesh( viewDist_m, xSize_m ,ySize_m ,xDots_n ,yDots_n, grid
 %   xSize_m, the full horizontal subtense of the calibration grid in 
 %   metres. A good way to set this is to run the DisplayUndistortionBVL
 %   routine, and measure the distance between the most extreme dots.
-%   Defaults to 0.440.
+%   Defaults to 0.340.
 %
 %   ySize_m, the full vertical subtense of the grid in metres. Defaults to
-%   0.352.
+%   0.272.
 %
 %   xDots_n, the number of columns of dots. Defaults to 37, which is also
 %   the default for DisplayUndistortionBVL.
@@ -48,11 +48,11 @@ if (nargin < 4) || isempty(xDots_n)
 end
 
 if (nargin < 3) || isempty(ySize_m)
-    ySize_m = .352;
+    ySize_m = .272;
 end
 
 if (nargin < 2) || isempty(xSize_m)
-    xSize_m = .440;
+    xSize_m = .340;
 end
 
 if (nargin < 1) || isempty(viewDist_m)

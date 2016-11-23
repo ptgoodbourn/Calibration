@@ -60,5 +60,5 @@ Screen('CloseAll');
     fprintf('\n\nFSSE: %f', err);
     fprintf('\n\nGamma:\t%f\nMinL:\t%f\nMaxL:\t%f\nGain:\t%f\nBias:\t%f\n\n', x([5 3 4 2 1]));
     
-    transformedVals = computeExtendedGammaInv(x, data.outVals);
+    transformedVals = real(computeExtendedGammaInv(x, data.outVals));
     plot(data.inVals,transformedVals,'bo');
