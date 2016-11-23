@@ -62,3 +62,9 @@ Screen('CloseAll');
     
     transformedVals = real(computeExtendedGammaInv(x, data.outVals));
     plot(data.inVals,transformedVals,'bo');
+
+    figure('color','white');
+    hold on;
+    plot(data.inVals,data.outVals/max(data.outVals),'ro');
+    plot(data.inVals,data.inVals,'r:');
+    axis square;
